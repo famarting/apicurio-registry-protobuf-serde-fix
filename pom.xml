@@ -1,0 +1,55 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.famartin</groupId>
+  <artifactId>apicurio-serdes-fix</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  
+  <properties>
+      <java.version>1.8</java.version>
+      <maven.compiler.source>${java.version}</maven.compiler.source>
+      <maven.compiler.target>${java.version}</maven.compiler.target>
+  </properties>
+  
+  <dependencies>
+  
+      <dependency>
+          <groupId>io.apicurio</groupId>
+          <artifactId>apicurio-registry-utils-serde</artifactId>
+          <version>1.3.2.Final</version>
+      </dependency>
+  
+      <dependency>
+          <groupId>org.glassfish.jersey.core</groupId>
+          <artifactId>jersey-client</artifactId>
+          <version>2.27</version>
+      </dependency>
+  
+  </dependencies>
+  
+  <build>
+      <plugins>
+          <plugin>
+              <groupId>io.apicurio</groupId>
+              <artifactId>apicurio-registry-maven-plugin</artifactId>
+              <version>1.3.2.Final</version>
+              <executions>
+                <execution>
+                <phase>generate-sources</phase>
+                  <id>register-artifact</id>
+                  <goals>
+                    <goal>register</goal>
+                  </goals>
+                  <configuration>
+                    <registryUrl>http://localhost:8080/api</registryUrl>
+                    <artifactType>PROTOBUF_FD</artifactType>
+                    <artifacts>
+                      <testmessage>${project.basedir}/testmessage.desc</testmessage>
+                    </artifacts>
+                  </configuration>
+                </execution>
+              </executions>
+          </plugin>
+      </plugins>
+  </build>
+  
+</project>
